@@ -5,7 +5,7 @@ package model.GameObjects;
  */
 public class StraightTimeMatch extends Match {
 
-    public StraightTimeMatch(Path path) {
+    public StraightTimeMatch(String path) {
         super(path);
         matchType = "StraightTimeMatch";
     }

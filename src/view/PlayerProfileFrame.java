@@ -62,8 +62,8 @@ public class PlayerProfileFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 PlayerProfileFrame.this.dispose();
-                GameFrame frame= new GameFrame();
-                frame.init();
+                ChoosePracticeGamePath frame= new ChoosePracticeGamePath();
+                frame.init(player);
                 frame.setVisible(true);
             }
         });

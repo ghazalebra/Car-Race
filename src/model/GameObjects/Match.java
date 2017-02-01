@@ -17,10 +17,10 @@ public class Match {
     protected String matchType;
     private List<Car> orderOfCars;
 
-    public Match(Path path){
+    public Match(String path){
         players = new ArrayList<Player>();
         cars = new ArrayList<Car>();
-        this.path = path;
+        //this.path = path;
         orderOfCars = new ArrayList<Car>();
     }
 

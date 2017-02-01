@@ -5,7 +5,7 @@ package model.GameObjects;
  */
 public class PointTargetMatch extends Match {
 
-    public PointTargetMatch(Path path) {
+    public PointTargetMatch(String path) {
         super(path);
     }
 }

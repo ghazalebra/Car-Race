@@ -5,7 +5,7 @@ package model.GameObjects;
  */
 public class CircularTimeMatch extends Match {
 
-    public CircularTimeMatch(Path path, int roundNumber) {
+    public CircularTimeMatch(String path, int roundNumber) {
         super(path);
         roundNumber = roundNumber;
         matchType = "CircularTimeMatch";

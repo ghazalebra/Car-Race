@@ -13,7 +13,7 @@ public class StraightRealMatch extends Match{
     private Prize prize;
     private List<Car> orderOfCars;
 
-    public StraightRealMatch(Path path) {
+    public StraightRealMatch(String path) {
         super(path);
         matchType = "StraightRealMatch";
         orderOfCars = new ArrayList<Car>();

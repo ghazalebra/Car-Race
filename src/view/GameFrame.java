@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 import model.GameEngine;
+import model.GameObjects.Player;
 
 import javax.swing.*;
 
@@ -11,7 +12,7 @@ import javax.swing.*;
 public class GameFrame extends JFrame {
     GameEngine engine = new GameEngine();
     ordinaryGamePanel panel = new ordinaryGamePanel();
-    public void init(){
+    public void init(Player player){
         GameController controller = new GameController();
         panel.init(controller, engine);
         controller.init(engine);

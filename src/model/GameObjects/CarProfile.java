@@ -10,7 +10,7 @@ public class CarProfile {
     private Engine engine;
     private double verticalFriction;
     private double steeringWheelPower;
-    private double brakeAcceleration;
+    private double breakAcceleration;
     private double bodyPower;
     private double repairCostPerUnit;
     private double price;
@@ -23,7 +23,7 @@ public class CarProfile {
         this.engine = engine;
         this.verticalFriction = verticalFriction;
         this.steeringWheelPower = steeringWheelPower;
-        this.brakeAcceleration = brakeAcceleration;
+        this.breakAcceleration = brakeAcceleration;
         this.bodyPower = bodyPower;
         this.repairCostPerUnit = repairCostPerUnit;
         this.price = price;
@@ -77,11 +77,11 @@ public class CarProfile {
         return verticalFriction;
     }
     public double getBrakeAcceleration() {
-        return brakeAcceleration;
+        return breakAcceleration;
     }
 
     public void setBrakeAcceleration(double brakeAcceleration) {
-        this.brakeAcceleration = brakeAcceleration;
+        this.breakAcceleration = brakeAcceleration;
     }
     public double getBodyPower() {
         return bodyPower;

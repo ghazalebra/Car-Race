@@ -10,7 +10,7 @@ public class CircularRealMatch extends Match {
     private Prize prize;
     private int roundNumber;
 
-    public CircularRealMatch(Path path) {
+    public CircularRealMatch(String path) {
         super(path);
         matchType = "CircularRealMatch";
     }
