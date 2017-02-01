@@ -3,8 +3,7 @@ package model;
 import javax.swing.*;
 import controller.GameController;
 
-import model.GameObjects.Player;
-import model.GameObjects.PlayerProfile;
+import model.GameObjects.*;
 import view.WelcomeFrame;
 
 import java.awt.*;
@@ -25,12 +24,7 @@ public class carRace {
 //        jframe.setVisible(true);
 //        jframe.pack();
 //        jframe.setLocationRelativeTo((Component)null);
-        Player player = new Player();
-        PlayerProfile palyerProfile= new PlayerProfile("Ali", 2000,100,200);
-        player.setPlayerProfile(palyerProfile);
-        WelcomeFrame frame= new WelcomeFrame();
-        frame.init(player);
-        frame.setVisible(true);
+
 
 
     }

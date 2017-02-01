@@ -12,17 +12,19 @@ import java.awt.event.ActionListener;
 /**
  * Created by sahar on 1/30/17.
  */
-public class PlayerProfileFrame extends Frame {
+public class PlayerProfileFrame extends JFrame {
 
     Player player;
 
     public void init(Player player){
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JPanel panel= new JPanel();
         panel.setLayout(new BorderLayout());
-        JLabel Label1= new JLabel("popularity");
-        JLabel Label2= new JLabel("money");
+        JLabel Label1= new JLabel("Popularity");
+        JLabel Label2= new JLabel("Money");
         JLabel popularityLabel= new JLabel(String.valueOf(player.getPlayerProfile().getPopularity()));
         JLabel moneyLabel= new JLabel(String.valueOf(player.getPlayerProfile().getMoney()));
+        JButton carsButton= new JButton("Cars");
 
         JButton startPracticeGameButton= new JButton("Start Practice Game");
         //JButton startGameButton= new JButton("Start Practice Game");
@@ -34,9 +36,13 @@ public class PlayerProfileFrame extends Frame {
         topPanel.add(popularityLabel);
 
         JPanel centerPanel= new JPanel();
-        centerPanel.setLayout(new FlowLayout());
-        centerPanel.add(Label2);
-        centerPanel.add(moneyLabel);
+        centerPanel.setLayout(new BorderLayout());
+        JPanel centralPanelsTop= new JPanel();
+        centralPanelsTop.setLayout(new FlowLayout());
+        centralPanelsTop.add(Label2);
+        centralPanelsTop.add(moneyLabel);
+        centerPanel.add(centralPanelsTop,BorderLayout.NORTH);
+        centerPanel.add(carsButton,BorderLayout.CENTER);
 
 
         JPanel buttomPanel= new JPanel();
@@ -48,7 +54,7 @@ public class PlayerProfileFrame extends Frame {
         panel.add(centerPanel,BorderLayout.CENTER);
         panel.add(topPanel,BorderLayout.NORTH);
         //startGameButton.setPreferredSize(new Dimension(200,100));
-        panel.setPreferredSize(new Dimension(800,640));
+        //panel.setPreferredSize(new Dimension(800,640));
         this.add(panel);
         this.pack();
         this.setLocationRelativeTo(null);
@@ -58,6 +64,16 @@ public class PlayerProfileFrame extends Frame {
                 PlayerProfileFrame.this.dispose();
                 GameFrame frame= new GameFrame();
                 frame.init();
+                frame.setVisible(true);
+            }
+        });
+
+        carsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PlayerProfileFrame.this.dispose();
+                CarsFrame frame= new CarsFrame();
+                frame.init(player);
                 frame.setVisible(true);
             }
         });

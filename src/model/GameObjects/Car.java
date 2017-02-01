@@ -48,7 +48,6 @@ public class Car extends TimerTask {
         setPrimaryFrontRight(startPoint);
         setPrimaryRearLeft(startPoint);
         setPrimaryRearRight(startPoint);
-        perpendicularSpeed = new Vector(0, currentSpeed.getalpha() - 90);
     }
 
     //setters and getters
@@ -100,8 +99,8 @@ public class Car extends TimerTask {
         return carProfile;
     }
 
-    public void setPerpendicularSpeed(Vector perpendicularSpeed) {
-        this.perpendicularSpeed = perpendicularSpeed;
+    public void setPerpendicularSpeed(Vector currentSpeed) {
+         perpendicularSpeed = new Vector(0, currentSpeed.getalpha() - 90);
     }
 
     public Vector getPerpendicularSpeed() {

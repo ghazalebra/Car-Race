@@ -22,12 +22,12 @@ public class WelcomeFrame extends JFrame {
         JPanel panel= new JPanel();
         panel.setLayout(new FlowLayout());
         JButton exitGameButton= new JButton("Exit");
-        JButton openProfileButton= new JButton(String.valueOf(player.getPlayerProfile().getMoney()));
+        JButton openProfileButton= new JButton("Player Profile");
         panel.add(openProfileButton);
         panel.add(exitGameButton);
         openProfileButton.setPreferredSize(new Dimension(200,100));
         exitGameButton.setPreferredSize(new Dimension(200,100));
-        panel.setPreferredSize(new Dimension(800,640));
+        //panel.setPreferredSize(new Dimension(800,640));
         this.setContentPane(panel);
         this.pack();
         this.setLocationRelativeTo(null);
