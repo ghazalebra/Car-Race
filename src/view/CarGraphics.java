@@ -37,9 +37,9 @@ public class CarGraphics {
         int ty = tiledMap.getY();
 
         g.setColor(Color.cyan);
-        g.fillRect((int)(tx + activeCar.getCurrentLocationPoint().getX() - activeCar.getCarProfile().getWidth()/2)
-                    , (int) (ty + activeCar.getCurrentLocationPoint().getY() - activeCar.getCarProfile().getLength()/2)
-                        ,(int)activeCar.getCarProfile().getWidth(), (int)activeCar.getCarProfile().getLength());
+        g.fillRect((int)(tx + activeCar.getCurrentLocationPoint().getX() - 10/2)
+                    , (int) (ty + activeCar.getCurrentLocationPoint().getY() - 20/2)
+                        ,10,20);
 
 
     }

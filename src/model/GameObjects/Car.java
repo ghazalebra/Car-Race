@@ -52,6 +52,11 @@ public class Car extends TimerTask {
 
     //setters and getters
 
+    public void setCurrentLocationPoint(Point currentLocationPoint) {
+        this.currentLocationPoint = currentLocationPoint;
+    }
+
+
     public Point getCurrentLocationPoint() {
         return currentLocationPoint;
     }
@@ -390,36 +395,36 @@ public class Car extends TimerTask {
 
     public void update(){
 
-        if (match.matchType.equals("CircularTimeMatch"))
-            CircularTimeMatchIsFinishedTime();
+//        if (match.matchType.equals("CircularTimeMatch"))
+//            CircularTimeMatchIsFinishedTime();
+//
+//        if (match.matchType.equals("StraightTimeMatch"))
+//            StraightTimeMatchIsFinishedTime();
+//
+//        if (match.matchType.equals("CircularRealMatch"))
+//            timeFinishedCircularRealRace();
+//
+//        if (match.matchType.equals("StraightRealMatch"))
+//            timeFinishedStraightRealRace();
+//
+//        setCurrentTime();
 
-        if (match.matchType.equals("StraightTimeMatch"))
-            StraightTimeMatchIsFinishedTime();
-
-        if (match.matchType.equals("CircularRealMatch"))
-            timeFinishedCircularRealRace();
-
-        if (match.matchType.equals("StraightRealMatch"))
-            timeFinishedStraightRealRace();
-
-        setCurrentTime();
-
-        if (GameEngine.isCollisionOccurred(this) != null)
-            GameEngine.collision(this, GameEngine.isCollisionOccurred(this));
-
-        //checks wall collision
-        if (isCollisionOccurred()){
-            collision();
-        }
+//        if (GameEngine.isCollisionOccurred(this) != null)
+//            GameEngine.collision(this, GameEngine.isCollisionOccurred(this));
+//
+//        //checks wall collision
+//        if (isCollisionOccurred()){
+//            collision();
+//        }
         currentLocationPoint = updateLocation(currentLocationPoint);
         frontLeft = updateLocation(frontLeft);
         frontRight = updateLocation(frontRight);
         rearLeft = updateLocation(rearLeft);
         rearRight = updateLocation(rearRight);
-        updateStreet();
+ //       updateStreet();
         //updateAcceleration();
         updateSpeed();
-        visitIntersection();
+ //       visitIntersection();
     }
 
     //Time

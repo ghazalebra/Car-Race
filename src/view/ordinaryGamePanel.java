@@ -2,13 +2,14 @@ package view;
 
 import controller.GameController;
 import model.GameEngine;
-import model.GameObjects.Car;
-import model.GameObjects.Engine;
-import model.GameObjects.Player;
+import model.GameObjects.*;
+import model.GameObjects.Point;
 
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -19,7 +20,7 @@ import java.io.IOException;
 /**
  * Created by sahar on 1/23/17.
  */
-public class ordinaryGamePanel extends JPanel implements Runnable {
+public class ordinaryGamePanel extends JPanel implements Runnable , KeyListener {
 
     Player player;
     GameController controller;
@@ -44,6 +45,7 @@ public class ordinaryGamePanel extends JPanel implements Runnable {
 
 
     public void init(GameController controller, GameEngine engine,Player player) {
+        this.player=player;
         this.controller = controller;
         this.engine = engine;
         running=true;
@@ -53,11 +55,14 @@ public class ordinaryGamePanel extends JPanel implements Runnable {
 
         System.out.println(player.getPlayerProfile().getMoney());
         carGraphics= new CarGraphics(player, tiledMap);
+        player.getPlayerProfile().getCars().get(0).setCurrentSpeed(new Vector(0,0));
+        player.getPlayerProfile().getCars().get(0).setCurrentLocationPoint(new Point(50,50));
 
     }
 
     public void addNotify(){
         super.addNotify();
+        addKeyListener(this);
         if(thread==null){
             thread=new Thread(this);
             thread.start();
@@ -101,5 +106,50 @@ public class ordinaryGamePanel extends JPanel implements Runnable {
         Graphics g2=getGraphics();
         g2.drawImage(image, 0, 0, null);
         g2.dispose();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+        int code = e.getKeyCode();
+        if(code== KeyEvent.VK_UP){
+            player.getPlayerProfile().getCars().get(0).pressGasPedal();
+        }
+        if(code == KeyEvent.VK_DOWN){
+            player.getPlayerProfile().getCars().get(0).pressBrake();
+        }
+        if(code == KeyEvent.VK_LEFT){
+            player.getPlayerProfile().getCars().get(0).pressLeftTurnButton();
+        }
+        if(code == KeyEvent.VK_RIGHT){
+            player.getPlayerProfile().getCars().get(0).pressRightTurnButton();
+        }
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+        int code = e.getKeyCode();
+        if(code== KeyEvent.VK_UP){
+            player.getPlayerProfile().getCars().get(0).releaseGasPedal();
+        }
+        if(code == KeyEvent.VK_DOWN){
+            player.getPlayerProfile().getCars().get(0).releaseBreak();
+        }
+        if(code == KeyEvent.VK_LEFT){
+            player.getPlayerProfile().getCars().get(0).releaseLeftTurnButton();
+        }
+        if(code == KeyEvent.VK_RIGHT){
+            player.getPlayerProfile().getCars().get(0).releaseRightTurnButton();
+        }
+
+
+
     }
 }
