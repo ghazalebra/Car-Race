@@ -38,6 +38,8 @@ public class PlayerProfile {
     private List<Node> recordsPerMatch;//holds record of each match
     private List<Car> cars;
 
+
+
     //constructor
     public PlayerProfile(String name, double money, double popularity, double bestScore){
         this.name = name;
@@ -47,7 +49,10 @@ public class PlayerProfile {
         recordsPerMatch = new ArrayList<Node>();
         recordsPerRound = new ArrayList<Node2>();
         cars = new ArrayList<>();
+
     }
+
+
 
     public double getBestScore() {
         return bestScore;

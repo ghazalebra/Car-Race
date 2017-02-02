@@ -9,7 +9,7 @@ import java.io.FileReader;
  * Created by Mahsa_Pc on 1/30/2017.
  */
 public class TiledMap {
-    private int x;
+
     private int y;
     private int tileSize;
     private int [][] map;
@@ -67,4 +67,30 @@ public class TiledMap {
             }
         }
     }
+    public int getColTile(int x){
+        return x/tileSize;
+    }
+
+    public int getRowTile(int y){
+        return y/tileSize;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    private int x;
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
 }

@@ -52,6 +52,10 @@ public class Car extends TimerTask {
 
     //setters and getters
 
+    public Point getCurrentLocationPoint() {
+        return currentLocationPoint;
+    }
+
 
     public List<Intersection> getVisitedIntersections() {
         return visitedIntersections;

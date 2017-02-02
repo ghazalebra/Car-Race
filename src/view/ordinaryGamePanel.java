@@ -2,6 +2,9 @@ package view;
 
 import controller.GameController;
 import model.GameEngine;
+import model.GameObjects.Car;
+import model.GameObjects.Engine;
+import model.GameObjects.Player;
 
 
 import javax.swing.*;
@@ -12,11 +15,13 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
+
 /**
  * Created by sahar on 1/23/17.
  */
 public class ordinaryGamePanel extends JPanel implements Runnable {
 
+    Player player;
     GameController controller;
     GameEngine engine;
     public static final int WIDTH=800;
@@ -28,6 +33,7 @@ public class ordinaryGamePanel extends JPanel implements Runnable {
     private int FPS=30;
     private int targetTime=1000/FPS;
     private TiledMap tiledMap;
+    private CarGraphics carGraphics;
 
     public ordinaryGamePanel(){
         super();
@@ -37,13 +43,16 @@ public class ordinaryGamePanel extends JPanel implements Runnable {
     }
 
 
-    public void init(GameController controller, GameEngine engine) {
+    public void init(GameController controller, GameEngine engine,Player player) {
         this.controller = controller;
         this.engine = engine;
         running=true;
         image=new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         g=(Graphics2D)image.getGraphics();
         tiledMap=new TiledMap("map2.tmx", 8);
+
+        System.out.println(player.getPlayerProfile().getMoney());
+        carGraphics= new CarGraphics(player, tiledMap);
 
     }
 
@@ -57,7 +66,7 @@ public class ordinaryGamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        init(controller, engine);
+        init(controller, engine , player);
         long startTime;
         long urdTime;
         long waitTime;
@@ -79,10 +88,13 @@ public class ordinaryGamePanel extends JPanel implements Runnable {
 
     public void update(){
         tiledMap.update();
+        carGraphics.update();
     }
 
     public void render(){
         tiledMap.draw(g);
+        carGraphics.draw(g);
+
     }
 
     public void draw(){

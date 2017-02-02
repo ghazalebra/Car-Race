@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by sahar on 2/1/17.
  */
-public class ChoosePracticeGamePath extends JFrame {
+public class ChooseRacePath extends JFrame {
     public void init(Player player){
         Car car=null;
         JPanel panel= new JPanel();
@@ -30,7 +30,7 @@ public class ChoosePracticeGamePath extends JFrame {
         for (int i = 0; i < player.getPlayerProfile().getCars().size() ; i++) {
             if(player.getPlayerProfile().getCars().get(i).isActive()){
                 car=player.getPlayerProfile().getCars().get(i);
-               // System.out.println(car.getCarProfile().getPrice());
+                // System.out.println(car.getCarProfile().getPrice());
             }
         }
 
@@ -38,8 +38,8 @@ public class ChoosePracticeGamePath extends JFrame {
         circularPathButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ChoosePracticeGamePath.this.dispose();
-                CircularTimeMatch match= new CircularTimeMatch("circularPath",1);
+                ChooseRacePath.this.dispose();
+                CircularRealMatch match= new CircularRealMatch("CircularPath");
                 player.play(match,finalCar);
                 GameFrame frame= new GameFrame();
                 frame.init(player);
@@ -51,8 +51,8 @@ public class ChoosePracticeGamePath extends JFrame {
         straightPathButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ChoosePracticeGamePath.this.dispose();
-                StraightTimeMatch match= new StraightTimeMatch("straightPath");
+                ChooseRacePath.this.dispose();
+                StraightRealMatch match= new StraightRealMatch("StraightPath");
                 player.play(match,finalCar);
                 GameFrame frame= new GameFrame();
                 frame.init(player);
@@ -63,12 +63,14 @@ public class ChoosePracticeGamePath extends JFrame {
         irregularPathButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ChoosePracticeGamePath.this.dispose();
+                ChooseRacePath.this.dispose();
                 GameFrame frame= new GameFrame();
                 frame.init(player);
                 frame.setVisible(true);
             }
         });
+
+
 
     }
 }
