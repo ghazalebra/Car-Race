@@ -1,5 +1,7 @@
 package model.GameObjects;
 
+import java.awt.*;
+
 /**
  * Created by ASUS on 09/12/2016.
  */
@@ -15,8 +17,9 @@ public class CarProfile {
     private double repairCostPerUnit;
     private double price;
     private double initialBodyPower;
+    private Color color;
 
-    public CarProfile(double length, double width, double weight, Engine engine, double verticalFriction, double steeringWheelPower, double brakeAcceleration, double bodyPower, double repairCostPerUnit, double price) {
+    public CarProfile(double length, double width, double weight, Engine engine, double verticalFriction, double steeringWheelPower, double brakeAcceleration, double bodyPower, double repairCostPerUnit, double price, Color color) {
         this.length = length;
         this.width = width;
         this.weight = weight;
@@ -28,7 +31,17 @@ public class CarProfile {
         this.repairCostPerUnit = repairCostPerUnit;
         this.price = price;
         this.initialBodyPower = bodyPower;
+        this.color= color;
     }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     public void setLength(double length) {
         this.length = length;
     }
