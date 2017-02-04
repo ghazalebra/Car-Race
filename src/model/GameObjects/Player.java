@@ -7,6 +7,16 @@ public class Player {
 
     private PlayerProfile playerProfile;
 
+    public Car getActiveCar() {
+        return activeCar;
+    }
+
+    public void setActiveCar(Car activeCar) {
+        this.activeCar = activeCar;
+    }
+
+    private Car activeCar;
+
     //constructor
 
     public void buy(Car car){

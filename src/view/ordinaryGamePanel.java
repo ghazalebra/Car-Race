@@ -55,8 +55,8 @@ public class ordinaryGamePanel extends JPanel implements Runnable , KeyListener 
 
         System.out.println(player.getPlayerProfile().getMoney());
         carGraphics= new CarGraphics(player, tiledMap);
-        player.getPlayerProfile().getCars().get(0).setCurrentSpeed(new Vector(0,0));
-        player.getPlayerProfile().getCars().get(0).setCurrentLocationPoint(new Point(50,50));
+        player.getActiveCar().setCurrentSpeed(new Vector(0,0));
+        player.getActiveCar().setCurrentLocationPoint(new Point(50,50));
 
     }
 

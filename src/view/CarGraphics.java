@@ -19,15 +19,20 @@ public class CarGraphics {
         this.player=player;
         this.tiledMap=tiledMap;
 
-        for (int i = 0; i < 2 ; i++) {
+        for (int i = 0; i < player.getPlayerProfile().getCars().size() ; i++) {
             if(player.getPlayerProfile().getCars().get(i).isActive()){
-                activeCar= player.getPlayerProfile().getCars().get(i);
+                player.setActiveCar(player.getPlayerProfile().getCars().get(i));
             }
         }
+        activeCar= player.getActiveCar();
     }
 
     public void update(){
         activeCar.update();
+
+        //move the map
+        tiledMap.setX((int) (ordinaryGamePanel.WIDTH / 2 - activeCar.getCurrentLocationPoint().getX()));
+        tiledMap.setY((int) (ordinaryGamePanel.HEIGHT / 2 - activeCar.getCurrentLocationPoint().getY()));
 
 
     }
