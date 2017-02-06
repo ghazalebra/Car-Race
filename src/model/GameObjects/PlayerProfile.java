@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * Created by ASUS on 16/12/2016.
  */
+
 class Node{
     String MatchType;
     double record;
@@ -34,6 +35,7 @@ public class PlayerProfile {
     private double money;
     private double popularity;
     private double bestScore;
+    private double preMoney;
     private List<Node2> recordsPerRound;//holds record of each round
     private List<Node> recordsPerMatch;//holds record of each match
     private List<Car> cars;
@@ -41,9 +43,10 @@ public class PlayerProfile {
 
 
     //constructor
-    public PlayerProfile(String name, double money, double popularity, double bestScore){
+    public PlayerProfile(String name, double preMoney, double popularity, double bestScore){
         this.name = name;
-        this.money = money;
+        this.preMoney = preMoney;
+        this.money = preMoney;
         this.popularity = popularity;
         this.bestScore = bestScore;
         recordsPerMatch = new ArrayList<Node>();
@@ -65,6 +68,8 @@ public class PlayerProfile {
     public double getMoney() {
         return money;
     }
+
+    public double getPreMoney() {return preMoney; }
 
     public void setMoney(double money) {
         this.money = money;
@@ -92,3 +97,4 @@ public class PlayerProfile {
         return cars;
     }
 }
+

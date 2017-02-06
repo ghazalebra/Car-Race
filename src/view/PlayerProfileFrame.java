@@ -23,7 +23,7 @@ public class PlayerProfileFrame extends JFrame {
         JLabel Label1= new JLabel("Popularity");
         JLabel Label2= new JLabel("Money");
         JLabel popularityLabel= new JLabel(String.valueOf(player.getPlayerProfile().getPopularity()));
-        JLabel moneyLabel= new JLabel(String.valueOf(player.getPlayerProfile().getMoney()));
+        JLabel moneyLabel= new JLabel(String.valueOf(player.getPlayerProfile().getPreMoney()));
         JButton carsButton= new JButton("Cars");
 
         JButton startPracticeGameButton= new JButton("Start Practice Game");

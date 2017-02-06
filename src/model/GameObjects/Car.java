@@ -2,6 +2,8 @@ package model.GameObjects;
 
 import model.GameEngine;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
@@ -9,7 +11,7 @@ import java.util.TimerTask;
 /**
  * Created by ASUS on 08/12/2016.
  */
-public class Car extends TimerTask {
+public class Car extends TimerTask{
 
 
     private Street currentStreet;
@@ -40,14 +42,24 @@ public class Car extends TimerTask {
 
     //constructor
     public Car(CarProfile carProfile, Point startPoint, Vector primarySpeed){
+
+
         this.carProfile = carProfile;
         this.startPoint = startPoint;
         this.currentLocationPoint = startPoint;
         this.primarySpeed = primarySpeed;
+        this.currentSpeed = primarySpeed;
+        this.acceleration = 0;
+        Vector ps = new Vector(0, primarySpeed.getalpha() - 90);
+        perpendicularSpeed = ps;
         setPrimaryFrontLeft(startPoint);
         setPrimaryFrontRight(startPoint);
         setPrimaryRearLeft(startPoint);
         setPrimaryRearRight(startPoint);
+        isTurningLeft = false;
+        isTurningRight = false;
+        gasPedalIsPressed = false;
+        brakeIsPressed = false;
     }
 
     //setters and getters
@@ -109,7 +121,7 @@ public class Car extends TimerTask {
     }
 
     public void setPerpendicularSpeed(Vector currentSpeed) {
-         perpendicularSpeed = new Vector(0, currentSpeed.getalpha() - 90);
+        perpendicularSpeed = new Vector(0, currentSpeed.getalpha() - 90);
     }
 
     public Vector getPerpendicularSpeed() {
@@ -157,6 +169,9 @@ public class Car extends TimerTask {
 
     //Maybe should be somewhere else:?
     public double formula(double x, Point point1, Point point2){
+
+        if ((point2.getX() - point1.getX()) == 0)
+            return 0;
         double m = (point2.getY() - point1.getY()) / (point2.getX() - point1.getX());
         return m * (x - point1.getX()) + point1.getY();
     }
@@ -189,11 +204,13 @@ public class Car extends TimerTask {
 
     public void pressBrake(){
         this.setBrakeIsPressed(true);
+        //if (acceleration <= 0)
         acceleration -= carProfile.getBrakeAcceleration();
     }
 
     public void releaseBreak(){
         this.setBrakeIsPressed(false);
+        //if (acceleration >= 0)
         acceleration += carProfile.getBrakeAcceleration();
     }
 
@@ -246,6 +263,10 @@ public class Car extends TimerTask {
             double Omega = currentSpeed.getMagnitude()/radiusOfTurn();
             Vector initialLocation= new Vector(center, point);
             Vector finalLocation= new Vector(radiusOfTurn(), initialLocation.getalpha() + Omega);
+            Point endPoint = new Point(center.getX() + finalLocation.getX(), center.getY() + finalLocation.getY());
+            finalLocation.endPoint = endPoint;
+            //jadid
+            currentSpeed.setalpha((90 + currentSpeed.getalpha()) % 360);
             return finalLocation.endPoint;
         }
         else if (isTurningLeft){
@@ -256,6 +277,10 @@ public class Car extends TimerTask {
             double Omega = currentSpeed.getMagnitude()/radiusOfTurn();
             Vector initialLocation= new Vector(center, point);
             Vector finalLocation= new Vector(radiusOfTurn(), initialLocation.getalpha() - Omega);
+            Point endPoint = new Point(center.getX() + finalLocation.getX(), center.getY() + finalLocation.getY());
+            finalLocation.endPoint = endPoint;
+            //jadid
+            currentSpeed.setalpha((90 - currentSpeed.getalpha()) % 360);
             return finalLocation.endPoint;
         }
         return new Point(0, 0);
@@ -288,20 +313,25 @@ public class Car extends TimerTask {
 
     //Update
     public Point updateLocation(Point point){
+
+
         if(isTurningLeft || isTurningRight){
+
+            System.out.println(radiusOfTurn());
             point = turningLocation(point);
             if (perpendicularSpeed.getMagnitude() != 0){
                 //vertical friction is negative.
                 double d = (1/2) * (carProfile.getVerticalFriction()/carProfile.getWeight()) + perpendicularSpeed.getMagnitude();
-                point.setX(point.getX() + d * Math.cos(currentSpeed.getalpha() - 90));
-                point.setY(point.getY() + d * Math.cos(180 - currentSpeed.getalpha()));
+                point.setX(point.getX() + d * Math.cos(Math.toRadians(currentSpeed.getalpha() - 90)));
+                point.setY(point.getY() + d * Math.cos(Math.toRadians(180 - currentSpeed.getalpha())));
                 perpendicularSpeed.setMagnitude(perpendicularSpeed.getMagnitude() + carProfile.getVerticalFriction() / carProfile.getWeight());
             }
         }
         else{
-            double d = (1/2) * acceleration + currentSpeed.getMagnitude();
-            point.setX(point.getX() + d*Math.cos(currentSpeed.getalpha()));
-            point.setY(point.getY() + d*Math.sin(currentSpeed.getalpha()));
+            double d = (0.5)*acceleration + currentSpeed.getMagnitude();
+            System.out.println(d);
+            point.setX(point.getX() + d*Math.cos(Math.toRadians(currentSpeed.getalpha())));
+            point.setY(point.getY() + d*Math.sin(Math.toRadians(currentSpeed.getalpha())));
         }
 
         return point;
@@ -351,6 +381,43 @@ public class Car extends TimerTask {
         currentSpeed.setMagnitude(Math.abs(magnitude));
         if (magnitude < 0)
             currentSpeed.invert();
+
+        setPerpendicularSpeed(currentSpeed);
+    }
+
+
+    public void update(){
+
+//        if (match.matchType.equals("CircularTimeMatch"))
+//            CircularTimeMatchIsFinishedTime();
+//
+//        if (match.matchType.equals("StraightTimeMatch"))
+//            StraightTimeMatchIsFinishedTime();
+//
+//        if (match.matchType.equals("CircularRealMatch"))
+//            timeFinishedCircularRealRace();
+//
+//        if (match.matchType.equals("StraightRealMatch"))
+//            timeFinishedStraightRealRace();
+//
+//        setCurrentTime();
+
+//        if (GameEngine.isCollisionOccurred(this) != null)
+//            GameEngine.collision(this, GameEngine.isCollisionOccurred(this));
+//
+//        //checks wall collision
+//        if (isCollisionOccurred()){
+//            collision();
+//        }
+        currentLocationPoint = updateLocation(currentLocationPoint);
+        frontLeft = updateLocation(frontLeft);
+        frontRight = updateLocation(frontRight);
+        rearLeft = updateLocation(rearLeft);
+        rearRight = updateLocation(rearRight);
+        //       updateStreet();
+        //updateAcceleration();
+        updateSpeed();
+        //       visitIntersection();
     }
 
     //should be called each millisecond.
@@ -393,39 +460,7 @@ public class Car extends TimerTask {
         }
     }
 
-    public void update(){
 
-//        if (match.matchType.equals("CircularTimeMatch"))
-//            CircularTimeMatchIsFinishedTime();
-//
-//        if (match.matchType.equals("StraightTimeMatch"))
-//            StraightTimeMatchIsFinishedTime();
-//
-//        if (match.matchType.equals("CircularRealMatch"))
-//            timeFinishedCircularRealRace();
-//
-//        if (match.matchType.equals("StraightRealMatch"))
-//            timeFinishedStraightRealRace();
-//
-//        setCurrentTime();
-
-//        if (GameEngine.isCollisionOccurred(this) != null)
-//            GameEngine.collision(this, GameEngine.isCollisionOccurred(this));
-//
-//        //checks wall collision
-//        if (isCollisionOccurred()){
-//            collision();
-//        }
-        currentLocationPoint = updateLocation(currentLocationPoint);
-        frontLeft = updateLocation(frontLeft);
-        frontRight = updateLocation(frontRight);
-        rearLeft = updateLocation(rearLeft);
-        rearRight = updateLocation(rearRight);
- //       updateStreet();
-        //updateAcceleration();
-        updateSpeed();
- //       visitIntersection();
-    }
 
     //Time
     //sets startTime.
@@ -461,6 +496,13 @@ public class Car extends TimerTask {
     @Override
     public void run() {
         update();
+        //System.out.println(currentLocationPoint.getX());
+        //System.out.println(currentLocationPoint.getY());
+        //System.out.println(currentSpeed.getMagnitude());
+        //System.out.println(currentSpeed.getalpha());
+        //System.out.println(acceleration);
+        System.out.println(currentSpeed.getalpha());
+
     }
 
     public double getRealMatchRecord() {

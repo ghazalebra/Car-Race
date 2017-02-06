@@ -7,20 +7,23 @@ public class Vector {
 
     private boolean IsFrontOfTheCar;//aghab ya jelo? this is the question!
     Point startPoint, endPoint;
-    private double x, y;
+    private double x, y; //moallefe ha
     private double magnitude;
     private double alpha;//zavieash ba mosbat e x ha.
 
     public Vector(double magnitude, double alpha){
         this.alpha = alpha;
         this.magnitude = magnitude;
-        this.x = Math.cos(alpha) * magnitude;
-        this.y = Math.sin(alpha) * magnitude;
+        this.x = Math.cos(Math.toRadians(alpha)) * magnitude;
+        this.y = Math.sin(Math.toRadians(alpha)) * magnitude;
+
     }
 
     public Vector(Point startPoint, Point endPoint){
         this.startPoint = startPoint;
         this.endPoint = endPoint;
+        this.magnitude = Math.sqrt(Math.pow((endPoint.getY() - startPoint.getY()), 2) + Math.pow((endPoint.getX() - startPoint.getX()), 2));
+        this.alpha = Math.atan(Math.toRadians((endPoint.getY() - startPoint.getY()) / (endPoint.getX() - startPoint.getX())));
     }
 
     public double formula(double x, Point point1, Point point2){
@@ -31,7 +34,7 @@ public class Vector {
         double x = v1.x + v2.x;
         double y = v1.y + v2.y;
         double magnitude = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-        double alpha = Math.atan(y/x);
+        double alpha = Math.atan(Math.toRadians(y /x));
         return new Vector(magnitude, alpha);
     }
 
