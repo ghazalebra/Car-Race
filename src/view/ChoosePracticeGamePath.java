@@ -35,6 +35,7 @@ public class ChoosePracticeGamePath extends JFrame {
         }
 
         Car finalCar= car;
+
         circularPathButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

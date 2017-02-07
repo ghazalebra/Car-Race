@@ -40,10 +40,23 @@ public class ChooseRacePath extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ChooseRacePath.this.dispose();
                 CircularRealMatch match= new CircularRealMatch("CircularPath");
-                player.play(match,finalCar);
-                GameFrame frame= new GameFrame();
-                frame.init(player);
-                frame.setVisible(true);
+                if(match.getRequiredPopularity()<player.getPlayerProfile().getPopularity()) {
+
+                    if(finalCar.getCarProfile().getBodyPower()< (0.3)* finalCar.getCarProfile().getInitialBodyPower()){
+                        player.play(match, finalCar);
+                        GameFrame frame = new GameFrame();
+                        frame.init(player);
+                        frame.setVisible(true);
+                    }
+
+                    else{
+                        JOptionPane.showMessageDialog(null, " you must repair your car first! ");
+                    }
+
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Not popular enough!");
+                }
 
             }
         });
@@ -53,10 +66,24 @@ public class ChooseRacePath extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ChooseRacePath.this.dispose();
                 StraightRealMatch match= new StraightRealMatch("StraightPath");
-                player.play(match,finalCar);
-                GameFrame frame= new GameFrame();
-                frame.init(player);
-                frame.setVisible(true);
+                if(match.getRequiredPopularity()<player.getPlayerProfile().getPopularity()) {
+
+                    if(finalCar.getCarProfile().getBodyPower()< (0.3)* finalCar.getCarProfile().getInitialBodyPower()) {
+
+                        player.play(match, finalCar);
+                        GameFrame frame = new GameFrame();
+                        frame.init(player);
+                        frame.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, " you must repair your car first! ");
+                    }
+
+
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Not popular enough!");
+                }
             }
         });
 

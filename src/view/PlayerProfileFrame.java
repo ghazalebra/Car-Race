@@ -23,7 +23,8 @@ public class PlayerProfileFrame extends JFrame {
         JLabel Label1= new JLabel("Popularity");
         JLabel Label2= new JLabel("Money");
         JLabel popularityLabel= new JLabel(String.valueOf(player.getPlayerProfile().getPopularity()));
-        JLabel moneyLabel= new JLabel(String.valueOf(player.getPlayerProfile().getPreMoney()));
+        JLabel moneyLabel= new JLabel(String.valueOf(player.getPlayerProfile().getMoney()));
+
         JButton carsButton= new JButton("Cars");
 
         JButton startPracticeGameButton= new JButton("Start Practice Game");
@@ -42,15 +43,33 @@ public class PlayerProfileFrame extends JFrame {
         centralPanelsTop.add(Label2);
         centralPanelsTop.add(moneyLabel);
         centerPanel.add(centralPanelsTop,BorderLayout.NORTH);
-        centerPanel.add(carsButton,BorderLayout.CENTER);
+
+        JButton repairButton= new JButton("Repair");
+        repairButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                player.getActiveCar().getCarProfile().setBodyPower(player.getActiveCar().getCarProfile().getBodyPower()+1);
+                player.getPlayerProfile().setMoney(player.getPlayerProfile().getMoney()- player.getActiveCar().getCarProfile().getRepairCostPerUnit());
+                moneyLabel.setText(player.getPlayerProfile().getMoney()+"");
+
+            }
+        });
+
+        JPanel centerCentralPanle= new JPanel();
+        centerCentralPanle.setLayout(new BoxLayout(centerCentralPanle,BoxLayout.Y_AXIS));
+        centerCentralPanle.add(carsButton);
+        centerCentralPanle.add(repairButton);
+
+        centerPanel.add(centerCentralPanle, BorderLayout.CENTER);
 
 
-        JPanel buttomPanel= new JPanel();
-        buttomPanel.setLayout(new FlowLayout());
-        buttomPanel.add(startPracticeGameButton);
-        buttomPanel.add(startRealRaceButton);
+        JPanel bottomPanel= new JPanel();
+        bottomPanel.setLayout(new FlowLayout());
+        bottomPanel.add(startPracticeGameButton);
+        bottomPanel.add(startRealRaceButton);
 
-        panel.add(buttomPanel,BorderLayout.SOUTH);
+        panel.add(bottomPanel,BorderLayout.SOUTH);
         panel.add(centerPanel,BorderLayout.CENTER);
         panel.add(topPanel,BorderLayout.NORTH);
         //startGameButton.setPreferredSize(new Dimension(200,100));

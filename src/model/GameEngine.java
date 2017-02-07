@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class GameEngine {
 
-    private static List<Car> cars;//Active cars
+    public static List<Car> cars;//Active cars
     private List<Player> players;
     private List<Match> matches;//bayad yeki bashe fekr konam
     private Match match;

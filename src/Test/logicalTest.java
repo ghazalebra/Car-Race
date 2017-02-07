@@ -23,8 +23,9 @@ public class LogicalTest {
         Timer timer = new Timer();
         Car car = new Car(carProfile, startPoint, primarySpeed);
         //timer.schedule(car, 0, 1000);
-        //car.pressGasPedal();
-        car.pressRightTurnButton();
+        car.pressGasPedal();
+        //car.pressBrake();
+        //car.pressRightTurnButton();
         timer.schedule(car, 0, 1000);
     }
 }

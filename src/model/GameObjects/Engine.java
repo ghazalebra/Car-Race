@@ -5,11 +5,11 @@ package model.GameObjects;
  */
 public class Engine {
     private double EngineAcceleration;
-    private int EngineMaxSpeed;
+    private double EngineMaxSpeed;
     private Vector positiveMaxSpeed;
     private Vector negativeMaxSpeed;
 
-    public Engine(int engineAcceleration, int engineMaxSpeed){
+    public Engine(double engineAcceleration, double engineMaxSpeed){
         this.EngineAcceleration = engineAcceleration;
         this.EngineMaxSpeed = engineMaxSpeed;
         negativeMaxSpeed = new Vector(EngineMaxSpeed, 0);
@@ -20,7 +20,7 @@ public class Engine {
         return EngineAcceleration;
     }
 
-    public int getEngineMaxSpeed() {
+    public double getEngineMaxSpeed() {
         return EngineMaxSpeed;
     }
 }

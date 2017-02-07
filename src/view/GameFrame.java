@@ -20,12 +20,11 @@ import java.util.*;
 
 public class GameFrame extends JFrame {
     GameEngine engine = new GameEngine();
-    ordinaryGamePanel panel = new ordinaryGamePanel();
-    Timer timer;
+    ordinaryGamePanel panel;
 
 
     public void init(Player player){
-
+        panel = new ordinaryGamePanel(player);
         JPanel mainPanel= new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
@@ -33,28 +32,38 @@ public class GameFrame extends JFrame {
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(startTimerButton, BorderLayout.PAGE_START);
         mainPanel.add(panel, BorderLayout.CENTER);
+        mainPanel.setFocusable(true);
+        mainPanel.requestFocus();
+        mainPanel.addKeyListener(panel);
 
-        startTimerButton.addActionListener(new ActionListener() {
+//        startTimerButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                startTimerButton.setText(ordinaryGamePanel.time+"");
+//            }
+//        });
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.setGameStarted(true);
-                timer.start();
-            }
-        });
-
-        timer = new Timer(100, new ActionListener() {
-            int counter=0;
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                startTimerButton.setText(counter/10+"."+counter%10);
-                counter++;
-            }
-        });
+//        startTimerButton.addActionListener(new ActionListener() {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                panel.setGameStarted(true);
+//                timer.start();
+//            }
+//        });
+//
+//        timer = new Timer(100, new ActionListener() {
+//            int counter=0;
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                startTimerButton.setText(counter/10+"."+counter%10);
+//                counter++;
+//            }
+//        });
 
         GameController controller = new GameController();
         panel.init(controller,engine,player);
-        controller.init(engine);
+        controller.init(panel,player);
         GameFrame.this.setContentPane(mainPanel);
         this.setVisible(true);
         this.pack();

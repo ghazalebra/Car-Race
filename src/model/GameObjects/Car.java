@@ -262,11 +262,11 @@ public class Car extends TimerTask{
             center = new Point(x, y);
             double Omega = currentSpeed.getMagnitude()/radiusOfTurn();
             Vector initialLocation= new Vector(center, point);
-            Vector finalLocation= new Vector(radiusOfTurn(), initialLocation.getalpha() + Omega);
+            Vector finalLocation= new Vector(radiusOfTurn(), initialLocation.getalpha() - Omega);
             Point endPoint = new Point(center.getX() + finalLocation.getX(), center.getY() + finalLocation.getY());
             finalLocation.endPoint = endPoint;
             //jadid
-            currentSpeed.setalpha((90 + currentSpeed.getalpha()) % 360);
+            currentSpeed.setalpha(( currentSpeed.getalpha()- Omega) % 360);
             return finalLocation.endPoint;
         }
         else if (isTurningLeft){
@@ -276,11 +276,11 @@ public class Car extends TimerTask{
             center = new Point(x, y);
             double Omega = currentSpeed.getMagnitude()/radiusOfTurn();
             Vector initialLocation= new Vector(center, point);
-            Vector finalLocation= new Vector(radiusOfTurn(), initialLocation.getalpha() - Omega);
+            Vector finalLocation= new Vector(radiusOfTurn(), initialLocation.getalpha() + Omega);
             Point endPoint = new Point(center.getX() + finalLocation.getX(), center.getY() + finalLocation.getY());
             finalLocation.endPoint = endPoint;
             //jadid
-            currentSpeed.setalpha((90 - currentSpeed.getalpha()) % 360);
+            currentSpeed.setalpha((Omega+currentSpeed.getalpha()) % 360);
             return finalLocation.endPoint;
         }
         return new Point(0, 0);
@@ -305,10 +305,13 @@ public class Car extends TimerTask{
     }
 
     public void collision(){
-        double primaryKineticEnergy = Math.pow(currentSpeed.getMagnitude(), 2) * carProfile.getWeight() * (1/2);
-        carProfile.setBodyPower(carProfile.getBodyPower() - (3/4) * primaryKineticEnergy);
-        currentSpeed.setMagnitude(currentSpeed.getMagnitude()/2);
+        double primaryKineticEnergy = Math.pow(currentSpeed.getMagnitude(), 2) * carProfile.getWeight() * (0.5);
+        carProfile.setBodyPower(carProfile.getBodyPower() - (0.75) * primaryKineticEnergy);
+        currentSpeed.setMagnitude(currentSpeed.getMagnitude()/2.0);
         currentSpeed.setalpha(180 - currentSpeed.getalpha());
+        System.out.println("Collision Occured");
+        System.out.println(currentSpeed.getMagnitude());
+        System.out.println(currentSpeed.getalpha());
     }
 
     //Update
@@ -317,7 +320,7 @@ public class Car extends TimerTask{
 
         if(isTurningLeft || isTurningRight){
 
-            System.out.println(radiusOfTurn());
+            //System.out.println(radiusOfTurn());
             point = turningLocation(point);
             if (perpendicularSpeed.getMagnitude() != 0){
                 //vertical friction is negative.
@@ -329,7 +332,7 @@ public class Car extends TimerTask{
         }
         else{
             double d = (0.5)*acceleration + currentSpeed.getMagnitude();
-            System.out.println(d);
+            //System.out.println(d);
             point.setX(point.getX() + d*Math.cos(Math.toRadians(currentSpeed.getalpha())));
             point.setY(point.getY() + d*Math.sin(Math.toRadians(currentSpeed.getalpha())));
         }
@@ -501,7 +504,7 @@ public class Car extends TimerTask{
         //System.out.println(currentSpeed.getMagnitude());
         //System.out.println(currentSpeed.getalpha());
         //System.out.println(acceleration);
-        System.out.println(currentSpeed.getalpha());
+        //System.out.println(currentSpeed.getalpha());
 
     }
 

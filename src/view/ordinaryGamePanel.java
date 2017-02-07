@@ -35,9 +35,10 @@ public class ordinaryGamePanel extends JPanel implements Runnable , KeyListener 
     private int targetTime = 1000 / FPS;
     private TiledMap tiledMap;
     private CarGraphics carGraphics;
-    private boolean gameStarted;
+    private static boolean gameStarted;
+    static int time;
 
-    public boolean isGameStarted() {
+    public static boolean isGameStarted() {
         return gameStarted;
     }
 
@@ -46,11 +47,24 @@ public class ordinaryGamePanel extends JPanel implements Runnable , KeyListener 
     }
 
 
-    public ordinaryGamePanel() {
+    public ordinaryGamePanel(Player player) {
         super();
+        this.player=player;
+
+//        this.setLayout(new BorderLayout());
+//        JButton startTimerButton= new JButton("Start");
+//        this.add(startTimerButton, BorderLayout.PAGE_START);
+
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setFocusable(true);
         requestFocus();
+
+
+//        image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+//        g = (Graphics2D) image.getGraphics();
+//        tiledMap = new TiledMap("map3.tmx", 8);  //////////////////????
+
+
     }
 
 
@@ -58,35 +72,66 @@ public class ordinaryGamePanel extends JPanel implements Runnable , KeyListener 
         this.player = player;
         this.controller = controller;
         this.engine = engine;
+
+
+//        running = true;
+//        image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+//        g = (Graphics2D) image.getGraphics();
+//        tiledMap = new TiledMap("map3.tmx", 8);
+//
+//        System.out.println(player.getPlayerProfile().getMoney());
+//        carGraphics = new CarGraphics(player, tiledMap);
+//        //player.getActiveCar().setCurrentSpeed(new Vector(0, 0));
+//        //player.getActiveCar().setCurrentLocationPoint(new Point(50, 50));
+//
+//        player.getPlayerProfile().getCars().get(0).setCurrentSpeed(new Vector(0,0));
+//        player.getPlayerProfile().getCars().get(0).setCurrentLocationPoint(new Point(50, 50));
+    }
+
+    public void init2(){
+
+
         running = true;
+
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         g = (Graphics2D) image.getGraphics();
-        tiledMap = new TiledMap("map2.tmx", 8);
+        tiledMap = new TiledMap("map3.tmx", 8);
 
         System.out.println(player.getPlayerProfile().getMoney());
         carGraphics = new CarGraphics(player, tiledMap);
         player.getActiveCar().setCurrentSpeed(new Vector(0, 0));
         player.getActiveCar().setCurrentLocationPoint(new Point(50, 50));
 
+//        player.getPlayerProfile().getCars().get(0).setCurrentSpeed(new Vector(0,0));
+//        player.getPlayerProfile().getCars().get(0).setCurrentLocationPoint(new Point(50, 50));
     }
+
 
     public void addNotify() {
         super.addNotify();
-        addKeyListener(this);
+        this.addKeyListener(this);
+
         if (thread == null) {
             thread = new Thread(this);
             thread.start();
         }
+
+
+        System.out.println("end of add notify");
     }
 
     @Override
     public void run() {
-        init(controller, engine, player);
+
+        init2();
         long startTime;
         long urdTime;
         long waitTime;
 
         while (running) {
+            //System.out.println("runnnn");
+            time++;
+
             startTime = System.nanoTime();
             update();
             render();
@@ -105,6 +150,11 @@ public class ordinaryGamePanel extends JPanel implements Runnable , KeyListener 
     public void update() {
         tiledMap.update();
         carGraphics.update();
+        if(CarGraphics.isGameOver()){
+            thread.stop();
+        }
+//        System.out.println(player.getActiveCar().getCurrentSpeed().getMagnitude());
+//        System.out.println("x=  "+player.getActiveCar().getCurrentLocationPoint().getX()+"    y=  "+player.getActiveCar().getCurrentLocationPoint().getY());
     }
 
     public void render() {
@@ -124,45 +174,57 @@ public class ordinaryGamePanel extends JPanel implements Runnable , KeyListener 
 
     }
 
+//
+
+
     @Override
     public void keyPressed(KeyEvent e) {
 
-        if (isGameStarted()) {
-            int code = e.getKeyCode();
-            if (code == KeyEvent.VK_UP) {
-                player.getActiveCar().pressGasPedal();
-            }
-            if (code == KeyEvent.VK_DOWN) {
-                player.getActiveCar().pressBrake();
-            }
-            if (code == KeyEvent.VK_LEFT) {
-                player.getActiveCar().pressLeftTurnButton();
-            }
-            if (code == KeyEvent.VK_RIGHT) {
-                player.getActiveCar().pressRightTurnButton();
-            }
+        // if (isGameStarted()) {
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_UP) {
+            CarGraphics.setUp(true);
+            System.out.println("x=  "+player.getActiveCar().getCurrentLocationPoint().getX()+"    y=  "+player.getActiveCar().getCurrentLocationPoint().getY());
+        }
+        if (code == KeyEvent.VK_DOWN) {
+            CarGraphics.setDown(true);
+            System.out.println("x=  "+player.getActiveCar().getCurrentLocationPoint().getX()+"    y=  "+player.getActiveCar().getCurrentLocationPoint().getY());
 
         }
+        if (code == KeyEvent.VK_LEFT) {
+            //CarGraphics.setLeft(true);
+            player.getActiveCar().pressLeftTurnButton();
+            player.getActiveCar().update();
+            System.out.println("x=  "+player.getActiveCar().getCurrentLocationPoint().getX()+"    y=  "+player.getActiveCar().getCurrentLocationPoint().getY());
+
+        }
+        if (code == KeyEvent.VK_RIGHT) {
+            CarGraphics.setRight(true);
+            System.out.println("x=  "+player.getActiveCar().getCurrentLocationPoint().getX()+"    y=  "+player.getActiveCar().getCurrentLocationPoint().getY());
+
+        }
+
+        //    }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (isGameStarted()) {
-            int code = e.getKeyCode();
-            if (code == KeyEvent.VK_UP) {
-                player.getActiveCar().releaseGasPedal();
-            }
-            if (code == KeyEvent.VK_DOWN) {
-                player.getActiveCar().releaseBreak();
-            }
-            if (code == KeyEvent.VK_LEFT) {
-                player.getActiveCar().releaseLeftTurnButton();
-            }
-            if (code == KeyEvent.VK_RIGHT) {
-                player.getActiveCar().releaseRightTurnButton();
-            }
-
-
+        //   if (isGameStarted()) {
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_UP) {
+            CarGraphics.setUp(false);
         }
+        if (code == KeyEvent.VK_DOWN) {
+            CarGraphics.setDown(false);
+        }
+        if (code == KeyEvent.VK_LEFT) {
+            CarGraphics.setLeft(false);
+        }
+        if (code == KeyEvent.VK_RIGHT) {
+            CarGraphics.setRight(false);
+        }
+
+
+        //    }
     }
 }

@@ -87,6 +87,7 @@ public class CarsFrame extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     player.getPlayerProfile().getCars().get(finalI).setActive(true);
+                    player.setActiveCar(player.getPlayerProfile().getCars().get(finalI));
                     System.out.println(carIndex+" "+player.getPlayerProfile().getCars().get(finalI).isActive()+" "+player.getPlayerProfile().getCars().get(finalI).getCarProfile().getWeight());
                     // /System.out.println(player.getPlayerProfile().getCars().get(finalI).getCarProfile().getPrice());
                 }

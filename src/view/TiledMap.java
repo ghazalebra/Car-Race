@@ -11,6 +11,11 @@ import java.io.FileReader;
 public class TiledMap {
 
     private int y;
+
+    public int getTileSize() {
+        return tileSize;
+    }
+
     private int tileSize;
     private int [][] map;
     private int mapWidth;
@@ -25,7 +30,7 @@ public class TiledMap {
             map=new int[mapHeigh][mapWidth];
 
 
-            for (int i = 0; i <24 ; i++) { //umadim 7 khate bala jke ye mosht tozihe alakie ro khundim ke mozaheme karemun nabashe :D
+            for (int i = 0; i <7 ; i++) { //umadim 7 khate bala jke ye mosht tozihe alakie ro khundim ke mozaheme karemun nabashe :D
                 br.readLine();
             }
 
@@ -51,16 +56,20 @@ public class TiledMap {
             for (int col = 0; col <mapWidth ; col++) {
                 int rc=map[row][col];
 
-                if(rc==706){
-                    g.setColor(Color.GRAY);
+                if(rc==650){
+                    g.setColor(Color.CYAN);
                 }
 
-                if(rc==455 || rc==169){
+                if(rc==654){
                     g.setColor(Color.GREEN);
                 }
 
-                if(rc==703){
+                if(rc==361){
                     g.setColor(Color.WHITE);
+                }
+
+                if(rc==31){
+                    g.setColor(Color.lightGray);
                 }
 
                 g.fillRect(x+col*tileSize, y+row*tileSize, tileSize, tileSize);
@@ -73,6 +82,10 @@ public class TiledMap {
 
     public int getRowTile(int y){
         return y/tileSize;
+    }
+
+    public int getTile(int row, int col){
+        return map[row][col];
     }
 
     public int getX() {
